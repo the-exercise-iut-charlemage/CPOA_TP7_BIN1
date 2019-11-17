@@ -60,4 +60,42 @@ public class Personne {
         }
         return personnes;
     }
+
+    public static Personne findById(int id){
+        Personne personne = null;
+        DBConnection dbConnection = DBConnection.getInstance();
+        Connection connection = dbConnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("select * from personne where id=?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                Personne p = new Personne(resultSet.getString("NOM"), resultSet.getString("PRENOM"));
+                p.setId(resultSet.getInt("ID"));
+                personne = p;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personne;
+    }
+
+    public static List<Personne> findByName(String name){
+        ArrayList<Personne> personnes = new ArrayList<>();
+        DBConnection dbConnection = DBConnection.getInstance();
+        Connection connection = dbConnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("select * from personne where nom=?");
+            statement.setString(1, name);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()){
+                Personne p = new Personne(resultSet.getString("NOM"), resultSet.getString("PRENOM"));
+                p.setId(resultSet.getInt("ID"));
+                personnes.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personnes;
+    }
 }
