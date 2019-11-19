@@ -14,8 +14,7 @@ public class PrincipaleJDBC {
 
     public static void main(String[] args) throws SQLException {
 
-        DBConnection co = DBConnection.getInstance();
-        Connection connect = co.getConnection();
+        Connection connect = DBConnection.getConnection();
 
         // creation de la table Personne
         {

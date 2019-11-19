@@ -9,13 +9,13 @@ import java.util.Properties;
 public class DBConnection {
     private Connection c;
     private static DBConnection s;
-    String dbName = "testpersonne";
+    private static String dbName = "testpersonne";
 
-    private DBConnection(){
+    private DBConnection(String dbName){
         try{
             // variables a modifier en fonction de la base
-            String userName = "root";
-            String password = "";
+            String userName = "aurel";
+            String password = "CHICAGOBULLS11";
             String serverName = "localhost";
             //Attention, sous MAMP, le port est 8889
             String portNumber = "3306";
@@ -34,27 +34,27 @@ public class DBConnection {
     }
 
 
-    public static DBConnection getInstance(){
+    public static Connection getConnection(){
         if(s == null){
-            s = new DBConnection();
+            s = new DBConnection(dbName);
         }else {
             try {
                 if(s.c!=null && s.c.isClosed()){
-                    s = new DBConnection();
+                    s = new DBConnection(dbName);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        return s;
+        return s.c;
     }
 
-    public Connection getConnection(){
-        return c;
-    }
-
-    public void setNomDB(String nomDB){
+    public static void setNomDB(String nomDB){
         dbName = nomDB;
-        s = new DBConnection();
+        try {
+            s.c.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -2,6 +2,7 @@ package activeRecord;
 
 import org.junit.Test;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.junit.Assert.*;
@@ -9,34 +10,32 @@ import static org.junit.Assert.*;
 public class DBConnectionTest {
 
     @Test
-    public void getInstance() {
+    public void getConnection1() {
         boolean res = true;
-        DBConnection d1 = DBConnection.getInstance();
-        DBConnection d2 = DBConnection.getInstance();
-        if(d1 != d2)
+        Connection c = DBConnection.getConnection();
+        if(!(c instanceof java.sql.Connection))
             res = false;
-        assertTrue("plusieur instance de DBConnection", res);
+        assertTrue("getInstance ne retourne pas le bon type", res);
     }
 
     @Test
-    public void getConnection() {
+    public void getInstance2(){
         boolean res = true;
-        DBConnection d = DBConnection.getInstance();
-        Object o = d.getConnection();
-        if(!(o instanceof java.sql.Connection))
+        Connection c1 = DBConnection.getConnection();
+        Connection c2 = DBConnection.getConnection();
+        if(c1 != c2)
             res = false;
-        assertTrue("getInstance ne retourne pas le bon type", res);
+        assertTrue("plusieurs instances de DBConnection", res);
     }
 
     @Test
     public void setNomDB() {
         try {
             boolean res = false;
-            DBConnection d = DBConnection.getInstance();
-            java.sql.Connection c = d.getConnection();
+            Connection c = DBConnection.getConnection();
             String s1 = c.getCatalog();
-            d.setNomDB("testpersonne2");
-            c = d.getConnection();
+            DBConnection.setNomDB("testpersonne2");
+            c = DBConnection.getConnection();
             String s2 = c.getCatalog();
             if(s1.compareTo("testpersonne")==0 && s2.compareTo("testpersonne2")==0){
                 res = true;

@@ -25,8 +25,7 @@ public class Film {
 
     public static Film findById(int id){
         Film film = null;
-        DBConnection dbConnection = DBConnection.getInstance();
-        Connection connection = dbConnection.getConnection();
+        Connection connection = DBConnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("select * from film where id=?");
             statement.setInt(1, id);

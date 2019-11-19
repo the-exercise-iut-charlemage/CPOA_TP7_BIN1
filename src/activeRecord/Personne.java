@@ -45,8 +45,7 @@ public class Personne {
 
     public static List<Personne> findAll(){
         ArrayList<Personne> personnes = new ArrayList<>();
-        DBConnection dbConnection = DBConnection.getInstance();
-        Connection connection = dbConnection.getConnection();
+        Connection connection = DBConnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("select * from personne");
             ResultSet resultSet = statement.executeQuery();
@@ -63,8 +62,7 @@ public class Personne {
 
     public static Personne findById(int id){
         Personne personne = null;
-        DBConnection dbConnection = DBConnection.getInstance();
-        Connection connection = dbConnection.getConnection();
+        Connection connection = DBConnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("select * from personne where id=?");
             statement.setInt(1, id);
@@ -82,8 +80,7 @@ public class Personne {
 
     public static List<Personne> findByName(String name){
         ArrayList<Personne> personnes = new ArrayList<>();
-        DBConnection dbConnection = DBConnection.getInstance();
-        Connection connection = dbConnection.getConnection();
+        Connection connection = DBConnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("select * from personne where nom=?");
             statement.setString(1, name);
@@ -100,8 +97,7 @@ public class Personne {
     }
 
     public static void createTable(){
-        DBConnection dbConnection = DBConnection.getInstance();
-        Connection connection = dbConnection.getConnection();
+        Connection connection = DBConnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("drop table if exist 'personne'");
             statement.executeUpdate();
@@ -111,8 +107,7 @@ public class Personne {
     }
 
     public static void deleteTable(){
-        DBConnection dbConnection = DBConnection.getInstance();
-        Connection connection = dbConnection.getConnection();
+        Connection connection = DBConnection.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS 'personne' ('ID' int(11) NOT NULL AUTO_INCREMENT,'NOM' varchar(40) NOT NULL,'PRENOM' varchar(40) NOT NULL,PRIMARY KEY ('ID')) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5");
             statement.executeUpdate();
