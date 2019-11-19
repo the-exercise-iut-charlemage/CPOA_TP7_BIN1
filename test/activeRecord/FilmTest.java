@@ -2,14 +2,10 @@ package activeRecord;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
-import java.sql.Connection;
+import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertTrue;
-
-public class PersonneTest {
-
+public class FilmTest {
     @Before
     public void create(){
         Personne.createTable();
@@ -17,10 +13,9 @@ public class PersonneTest {
         Personne.save(p);
         p = new Personne("Scott", "Ridley");
         Personne.save(p);
-        p = new Personne("Kubrick", "Stanley");
-        Personne.save(p);
-        p = new Personne("Fincher", "David");
-        Personne.save(p);
+
+        Film.createTable();
+        Film f = new Film("ReadyPlayerOne",);
     }
 
 
@@ -28,4 +23,5 @@ public class PersonneTest {
     public void delete(){
         Personne.deleteTable();
     }
+
 }
