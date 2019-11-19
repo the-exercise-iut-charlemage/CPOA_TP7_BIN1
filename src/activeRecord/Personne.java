@@ -99,7 +99,7 @@ public class Personne {
     public static void createTable(){
         Connection connection = DBConnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement("drop table if exist 'personne'");
+            PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS 'personne' ('ID' int(11) NOT NULL AUTO_INCREMENT,'NOM' varchar(40) NOT NULL,'PRENOM' varchar(40) NOT NULL,PRIMARY KEY ('ID'))");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,7 +109,7 @@ public class Personne {
     public static void deleteTable(){
         Connection connection = DBConnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS 'personne' ('ID' int(11) NOT NULL AUTO_INCREMENT,'NOM' varchar(40) NOT NULL,'PRENOM' varchar(40) NOT NULL,PRIMARY KEY ('ID')) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5");
+            PreparedStatement statement = connection.prepareStatement("drop table if exist 'personne'");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
