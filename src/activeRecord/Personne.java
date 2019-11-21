@@ -115,4 +115,50 @@ public class Personne {
             e.printStackTrace();
         }
     }
+
+    public void delete(){
+        Connection connection = DBConnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM personne WHERE id = ?");
+            statement.setInt(1, id);
+            statement.executeUpdate();
+            id = -1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void save(){
+        if(id==-1){
+            saveNew();
+        }else{
+            update();
+        }
+    }
+
+    private void saveNew(){
+        Connection connection = DBConnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("insert into personne(nom, prenom, id) values (?, ?, ?)");
+            statement.setString(1, nom);
+            statement.setString(2, prenom);
+            statement.setInt(3, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void update(){
+        Connection connection = DBConnection.getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE personne SET nom = ?, prenom = ? WHERE id = ?");
+            statement.setString(1, nom);
+            statement.setString(2, prenom);
+            statement.setInt(3, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

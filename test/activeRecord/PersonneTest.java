@@ -4,28 +4,69 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.sql.Connection;
+import java.util.ArrayList;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class PersonneTest {
 
     @Before
-    public void create(){
+    public void createTable(){
         Personne.createTable();
         Personne p = new Personne("Spielberg", "Steven");
-        Personne.save(p);
+        p.save();
         p = new Personne("Scott", "Ridley");
-        Personne.save(p);
+        p.save();
         p = new Personne("Kubrick", "Stanley");
-        Personne.save(p);
+        p.save();
         p = new Personne("Fincher", "David");
-        Personne.save(p);
+        p.save();
     }
 
+    @Test
+    public void findAll() {
+        String[] noms = {"Spielberg", "Scott", "Kubrick", "Fincher"};
+        String[] prenoms = {"Steven", "Ridley", "Stanley", "David"};
+        ArrayList<Personne> list = (ArrayList<Personne>) Personne.findAll();
+
+        assertEquals("la taille de la liste est incorrect ", 4, list.size());
+
+        for (int i=0; i<list.size(); i++){
+            assertEquals("le nom est incorrect ", noms[i], list.get(i).getNom());
+            assertEquals("le prenom est incorrect ", prenoms[i], list.get(i).getPrenom());
+        }
+    }
+
+    @Test
+    public void findById() {
+        Personne p = Personne.findById(2);
+        assertEquals("le nom est incorrect ", "Scott", p.getNom());
+        assertEquals("le prenom est incorrect ", "Ridley", p.getPrenom());
+    }
+
+    @Test
+    public void findByName() {
+        ArrayList<Personne> list = (ArrayList<Personne>) Personne.findByName("Fincher");
+
+        assertEquals("la taille de la liste est incorrect ", 1, list.size());
+
+        assertEquals("le nom est incorrect ", "Fincher", list.get(0).getNom());
+        assertEquals("le prenom est incorrect ", "David", list.get(0).getPrenom());
+    }
+
+    @Test
+    public void delete() {
+        Personne p = new Personne("Nom", "Prenom");
+        p.save();
+        p.delete();
+
+        ArrayList<Personne> list = (ArrayList<Personne>) Personne.findAll();
+        assertEquals("la taille de la liste est incorrect ", 4, list.size());
+        assertEquals("l'id est incorrect ", -1, p.getId());
+    }
 
     @After
-    public void delete(){
+    public void deleteTable(){
         Personne.deleteTable();
     }
 }
