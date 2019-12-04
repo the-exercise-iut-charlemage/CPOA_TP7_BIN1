@@ -94,7 +94,7 @@ public class Personne {
     public static void createTable(){
         Connection connection = DBConnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS 'personne' ('ID' int(11) NOT NULL AUTO_INCREMENT,'NOM' varchar(40) NOT NULL,'PRENOM' varchar(40) NOT NULL,PRIMARY KEY ('ID'))");
+            PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `personne` (`ID` int(11) NOT NULL AUTO_INCREMENT, `NOM` varchar(40) NOT NULL, `PRENOM` varchar(40) NOT NULL, PRIMARY KEY (`ID`))AUTO_INCREMENT=1");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

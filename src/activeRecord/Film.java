@@ -84,7 +84,7 @@ public class Film {
     public static void createTable(){
         Connection connection = DBConnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS 'film' ('ID' int(11) NOT NULL AUTO_INCREMENT,'TITRE' varchar(40) NOT NULL,`ID_REA` int(11) DEFAULT NULL,PRIMARY KEY (`ID`)");
+            PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS `film` (`ID` int(11) NOT NULL AUTO_INCREMENT, `TITRE` varchar(40) NOT NULL, `ID_REA` int(11) DEFAULT NULL, PRIMARY KEY (`ID`), KEY `ID_REA` (`ID_REA`))AUTO_INCREMENT=1");
             statement.executeUpdate();
             statement = connection.prepareStatement("ALTER TABLE `film` ADD CONSTRAINT `film_ibfk_1` FOREIGN KEY (`ID_REA`) REFERENCES `personne` (`ID`);");
             statement.executeUpdate();
@@ -129,7 +129,7 @@ public class Film {
         }
         Connection connection = DBConnection.getConnection();
         try{
-            PreparedStatement statement = connection.prepareStatement("insert into film values(?,?)");
+            PreparedStatement statement = connection.prepareStatement("insert into film(titre,id_rea) values(?,?)");
             statement.setString(1, this.titre);
             statement.setInt(2, this.id_real);
             statement.executeUpdate();
@@ -147,6 +147,7 @@ public class Film {
             PreparedStatement statement = connection.prepareStatement("update film set titre = ? , id_rea = ? where id = ?");
             statement.setString(1,this.titre);
             statement.setInt(2,this.id_real);
+            statement.setInt(3,this.id);
             statement.executeUpdate();
         }catch (SQLException e){
             e.printStackTrace();
