@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Personne {
 
@@ -39,7 +38,7 @@ public class Personne {
         this.prenom = prenom;
     }
 
-    public static List<Personne> findAll(){
+    public static ArrayList<Personne> findAll(){
         ArrayList<Personne> personnes = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         try {
@@ -74,7 +73,7 @@ public class Personne {
         return personne;
     }
 
-    public static List<Personne> findByName(String name){
+    public static ArrayList<Personne> findByName(String name){
         ArrayList<Personne> personnes = new ArrayList<>();
         Connection connection = DBConnection.getConnection();
         try {
