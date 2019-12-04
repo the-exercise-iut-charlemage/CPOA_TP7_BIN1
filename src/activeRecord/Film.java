@@ -65,9 +65,9 @@ public class Film {
         return Personne.findById(id_real);
     }
 
-    public static List<Film> findbyRealisateur(Personne p){
+    public static ArrayList<Film> findbyRealisateur(Personne p){
         Connection connection = DBConnection.getConnection();
-        List<Film> films = new ArrayList<>();
+        ArrayList<Film> films = new ArrayList<>();
         try{
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM FILM WHERE ID_REA = ?");
             statement.setInt(1, p.getId());
