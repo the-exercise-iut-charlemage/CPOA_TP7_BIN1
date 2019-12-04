@@ -24,6 +24,26 @@ public class Film {
         this.id_real = id_real;
     }
 
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getId_real() {
+        return id_real;
+    }
+
+    public void setId_real(Personne p) {
+        this.id_real = p.getId();
+    }
+
     public static Film findById(int id){
         Film film = null;
         Connection connection = DBConnection.getConnection();
@@ -45,7 +65,7 @@ public class Film {
         return Personne.findById(id_real);
     }
 
-    public List<Film> findbyRealisateur(Personne p){
+    public static List<Film> findbyRealisateur(Personne p){
         Connection connection = DBConnection.getConnection();
         List<Film> films = new ArrayList<>();
         try{
@@ -79,6 +99,56 @@ public class Film {
             PreparedStatement statement = connection.prepareStatement("drop table if exist 'film'");
             statement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(){
+        Connection connection = DBConnection.getConnection();
+        try{
+            PreparedStatement statement = connection.prepareStatement("delete from film where id = ?");
+            statement.setInt(1, this.id);
+            statement.executeUpdate();
+            this.id = -1;
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void save() throws RealisateurAbsentException{
+        if(this.id == -1){
+            this.saveNew();
+        }else{
+            this.update();
+        }
+    }
+
+    private void saveNew() throws RealisateurAbsentException{
+        if(id_real == -1){
+            throw new RealisateurAbsentException();
+        }
+        Connection connection = DBConnection.getConnection();
+        try{
+            PreparedStatement statement = connection.prepareStatement("insert into film values(?,?)");
+            statement.setString(1, this.titre);
+            statement.setInt(2, this.id_real);
+            statement.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void update() throws RealisateurAbsentException{
+        if(id_real == -1){
+            throw new RealisateurAbsentException();
+        }
+        Connection connection = DBConnection.getConnection();
+        try{
+            PreparedStatement statement = connection.prepareStatement("update film set titre = ? , id_rea = ? where id = ?");
+            statement.setString(1,this.titre);
+            statement.setInt(2,this.id_real);
+            statement.executeUpdate();
+        }catch (SQLException e){
             e.printStackTrace();
         }
     }
