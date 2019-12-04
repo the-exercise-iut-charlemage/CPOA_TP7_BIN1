@@ -23,10 +23,6 @@ public class Personne {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNom() {
         return nom;
     }
@@ -51,7 +47,7 @@ public class Personne {
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 Personne p = new Personne(resultSet.getString("NOM"), resultSet.getString("PRENOM"));
-                p.setId(resultSet.getInt("ID"));
+                p.id = resultSet.getInt("ID");
                 personnes.add(p);
             }
         } catch (SQLException e) {
@@ -69,7 +65,7 @@ public class Personne {
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()){
                 Personne p = new Personne(resultSet.getString("NOM"), resultSet.getString("PRENOM"));
-                p.setId(resultSet.getInt("ID"));
+                p.id = resultSet.getInt("ID");
                 personne = p;
             }
         } catch (SQLException e) {
@@ -87,7 +83,7 @@ public class Personne {
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()){
                 Personne p = new Personne(resultSet.getString("NOM"), resultSet.getString("PRENOM"));
-                p.setId(resultSet.getInt("ID"));
+                p.id = resultSet.getInt("ID");
                 personnes.add(p);
             }
         } catch (SQLException e) {
@@ -139,10 +135,9 @@ public class Personne {
     private void saveNew(){
         Connection connection = DBConnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement("insert into personne(nom, prenom, id) values (?, ?, ?)");
+            PreparedStatement statement = connection.prepareStatement("insert into personne(nom, prenom) values (?, ?)");
             statement.setString(1, nom);
             statement.setString(2, prenom);
-            statement.setInt(3, id);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
