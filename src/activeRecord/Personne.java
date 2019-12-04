@@ -114,6 +114,7 @@ public class Personne {
     public void delete(){
         Connection connection = DBConnection.getConnection();
         try {
+            System.out.println(id);
             PreparedStatement statement = connection.prepareStatement("DELETE FROM personne WHERE id = ?");
             statement.setInt(1, id);
             statement.executeUpdate();
@@ -138,6 +139,11 @@ public class Personne {
             statement.setString(1, nom);
             statement.setString(2, prenom);
             statement.executeUpdate();
+            statement = connection.prepareStatement("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'testpersonne' AND TABLE_NAME = 'personne'");
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                id = resultSet.getInt("AUTO_INCREMENT") - 1;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

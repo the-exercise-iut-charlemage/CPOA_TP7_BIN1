@@ -61,7 +61,7 @@ public class PersonneTest {
         p.delete();
 
         ArrayList<Personne> list = (ArrayList<Personne>) Personne.findAll();
-        assertEquals("la taille de la liste est incorrect ", 4, list.size());
+        assertEquals("la taille de la liste est incorrect "+list.toString(), 4, list.size());
         assertEquals("l'id est incorrect ", -1, p.getId());
     }
 
