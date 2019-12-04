@@ -104,7 +104,7 @@ public class Personne {
     public static void deleteTable(){
         Connection connection = DBConnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement("drop table if exist 'personne'");
+            PreparedStatement statement = connection.prepareStatement("drop table if exists personne");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -154,5 +154,10 @@ public class Personne {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return nom+" "+prenom+", ID:"+id;
     }
 }

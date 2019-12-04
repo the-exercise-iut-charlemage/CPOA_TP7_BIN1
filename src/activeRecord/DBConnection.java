@@ -14,8 +14,8 @@ public class DBConnection {
     private DBConnection(String dbName){
         try{
             // variables a modifier en fonction de la base
-            String userName = "aurel";
-            String password = "CHICAGOBULLS11";
+            String userName = "root";
+            String password = "";
             String serverName = "localhost";
             //Attention, sous MAMP, le port est 8889
             String portNumber = "3306";

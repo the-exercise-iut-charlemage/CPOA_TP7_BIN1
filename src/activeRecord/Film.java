@@ -96,7 +96,7 @@ public class Film {
     public static void deleteTable(){
         Connection connection = DBConnection.getConnection();
         try {
-            PreparedStatement statement = connection.prepareStatement("drop table if exist 'film'");
+            PreparedStatement statement = connection.prepareStatement("drop table if exists film");
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
