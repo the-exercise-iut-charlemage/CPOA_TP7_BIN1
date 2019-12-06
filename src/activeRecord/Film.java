@@ -69,7 +69,7 @@ public class Film {
         Connection connection = DBConnection.getConnection();
         ArrayList<Film> films = new ArrayList<>();
         try{
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM FILM WHERE ID_REA = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM film WHERE ID_REA = ?");
             statement.setInt(1, p.getId());
             ResultSet rs = statement.executeQuery();
             while (rs.next()){
