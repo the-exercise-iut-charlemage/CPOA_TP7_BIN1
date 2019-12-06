@@ -114,7 +114,6 @@ public class Personne {
     public void delete(){
         Connection connection = DBConnection.getConnection();
         try {
-            System.out.println(id);
             PreparedStatement statement = connection.prepareStatement("DELETE FROM personne WHERE id = ?");
             statement.setInt(1, id);
             statement.executeUpdate();

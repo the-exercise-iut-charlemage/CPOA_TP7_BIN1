@@ -153,4 +153,10 @@ public class Film {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public String toString() {
+        Personne p = Personne.findById(id_real);
+        return titre + " " + p.getNom() + " " + p.getPrenom() + ", ID:" + id;
+    }
 }
