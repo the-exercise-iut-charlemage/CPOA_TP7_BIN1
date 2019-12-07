@@ -42,6 +42,36 @@ public class FilmTest {
     }
 
     @Test
+    public void saveNew(){
+        Film f = new Film("Bataille",Personne.findById(3));
+        try {
+            f.save();
+        }catch(RealisateurAbsentException e){
+            e.printStackTrace();
+        }
+        ArrayList<Film> list = (ArrayList<Film>) Film.findbyRealisateur(Personne.findById(3));
+
+        assertEquals("la taille de la liste est incorrect ", 2, list.size());
+        assertEquals("le titre est incorrect", "Orange Mecanique", list.get(0).getTitre());
+        assertEquals("le titre est incorrect", "Bataille", list.get(1).getTitre());
+    }
+
+    @Test
+    public void update(){
+        Film f = Film.findById(7);
+        f.setTitre("Pomme Mecanique");
+        try {
+            f.save();
+        }catch(RealisateurAbsentException e){
+            e.printStackTrace();
+        }
+
+        Film m = Film.findById(7);
+        assertEquals("le titre est incorrect", "Pomme Mecanique", m.getTitre());
+        assertEquals("Le réalisateur est incorrect","Kubrick",m.getRealisateur().getNom());
+    }
+
+    @Test
     public void findById() {
         Film f1 = Film.findById(1);
         Film f2 = Film.findById(6);

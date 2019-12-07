@@ -24,6 +24,30 @@ public class PersonneTest {
     }
 
     @Test
+    public void saveNew(){
+        Personne p = new Personne("Cameron","James");
+        p.save();
+
+        ArrayList<Personne> list = (ArrayList<Personne>) Personne.findByName("Cameron");
+
+        assertEquals("la taille de la liste est incorrect ", 1, list.size());
+
+        assertEquals("le nom est incorrect ", "Cameron", list.get(0).getNom());
+        assertEquals("le prenom est incorrect ", "James", list.get(0).getPrenom());
+    }
+
+    @Test
+    public void update(){
+        Personne p = Personne.findById(1);
+        p.setPrenom("Peter");
+        p.save();
+
+        Personne r = Personne.findById(1);
+        assertEquals("le nom est incorrect ", "Spielberg", r.getNom());
+        assertEquals("le prenom est incorrect ", "Peter", r.getPrenom());
+    }
+
+    @Test
     public void findAll() {
         String[] noms = {"Spielberg", "Scott", "Kubrick", "Fincher"};
         String[] prenoms = {"Steven", "Ridley", "Stanley", "David"};
